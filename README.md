@@ -86,18 +86,10 @@ durl 是根据JetBrains sro授予的免费JetBrains开源许可证与GoLand一�
 [免费申请 jetbrains 全家桶](https://zhuanlan.zhihu.com/p/264139984?utm_source=wechat_session)
 
 
-## 赞助商
-#### RobeeAsk http://durl.robeeask.com/  付费问答社区
-#### 有问题也可以在此交流
-
 ## 交流
 #### 如果文档中未能覆盖的任何疑问,欢迎您发送邮件到<songangweb@foxmail.com>,我会尽快答复。
 #### 您可以在提出使用中需要改进的地方,我会考虑合理性并尽快修改。
 #### 如果您发现 bug 请及时提 issue,我会尽快确认并修改。
 #### 有劳点一下 star，一个小小的 star 是作者回答问题的动力 🤝
 #### 
-
-## 微信 有问题也可以直接加我微信
-<img src="https://user-images.githubusercontent.com/44894211/158759545-1d6cfa83-2659-40c9-8905-a5e15f1b1de0.png" width="300px">
-
 
