@@ -69,6 +69,59 @@ func BenchmarkHashLRU_Freq(b *testing.B) {
 	b.Logf("hit: %d miss: %d ratio: %f", hit, miss, float64(hit)/float64(miss))
 }
 
+func TestHashLRUKeys(t *testing.T) {
+	evictCounter := 0
+	onEvicted := func(k interface{}, v interface{}, expirationTime int64) {
+		if k != v {
+			t.Fatalf("Evict values not equal (%v!=%v)", k, v)
+		}
+		evictCounter++
+	}
+	l, err := NewHashLfuWithEvict(128, 8, onEvicted)
+	if err != nil {
+		t.Fatalf("err: %v", err)
+	}
+
+	// 每个切片对应的长度
+	lenMap := map[int]int{
+		1: 1,
+		2: 2,
+		3: 0,
+		4: 2,
+		5: 3,
+	}
+	lenCount := make(map[int]int, 8)
+
+	// 获取总key
+	var totalCount int
+	for _, v := range lenMap {
+		totalCount += v
+	}
+
+	for i := 0; i < 128; i++ {
+		var ak interface{} = i
+		// 获取切片索引
+		av := l.modulus(&ak)
+		// 获取对应切片长度
+		if lMax, ok := lenMap[av]; ok {
+			// 对应切片计数
+			curNum := lenCount[av]
+			if curNum < lMax {
+				l.Add(ak, i, 0)
+			}
+			lenCount[av]++
+		} else {
+			continue
+		}
+	}
+
+	keyLen := len(l.Keys())
+	if totalCount != len(l.Keys()) {
+		t.Fatalf("Evict values not equal (%v!=%v)", totalCount, keyLen)
+	}
+
+}
+
 func TestHashLRU(t *testing.T) {
 	evictCounter := 0
 	onEvicted := func(k interface{}, v interface{}, expirationTime int64) {

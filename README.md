@@ -79,12 +79,6 @@ HashLruCache引入哈希算法，将缓存数据分散到N个LruCache上。查�
 
     更多方法,请查看 interface
 
-## JetBrains操作系统许可证
-
-durl 是根据JetBrains sro授予的免费JetBrains开源许可证与GoLand一起开发的，因此在此我要表示感谢。
-
-[免费申请 jetbrains 全家桶](https://zhuanlan.zhihu.com/p/264139984?utm_source=wechat_session)
-
 
 ## 交流
 #### 如果文档中未能覆盖的任何疑问,欢迎您发送邮件到<songangweb@foxmail.com>,我会尽快答复。

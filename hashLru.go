@@ -40,7 +40,7 @@ func NewHashLruWithEvict(size, sliceNum int, onEvicted func(key interface{}, val
 	}
 
 	// 计算出每个分片的数据长度
-	lruLen := int(math.Ceil(float64(size/sliceNum)))
+	lruLen := int(math.Ceil(float64(size / sliceNum)))
 	var h HashLruCache
 	h.size = size
 	h.sliceNum = sliceNum
@@ -180,7 +180,7 @@ func (h *HashLruCache) Resize(size int) (evicted int) {
 	}
 
 	// 计算出每个分片的数据长度
-	lruLen := int(math.Ceil(float64(size/h.sliceNum)))
+	lruLen := int(math.Ceil(float64(size / h.sliceNum)))
 
 	for i := 0; i < h.sliceNum; i++ {
 		h.list[i].lock.Lock()
@@ -215,13 +215,19 @@ func (h *HashLruCache) Keys() []interface{} {
 		allKeys[s] = oneKeys
 	}
 
-	for i := 0; i < h.list[0].lru.Len(); i++ {
-		for c := 0; c < len(allKeys); c++ {
-			if len(allKeys[c]) > i {
-				keys = append(keys, allKeys[c][i])
-			}
+	for c := 0; c < len(allKeys); c++ {
+		for _, v := range allKeys[c] {
+			keys = append(keys, v)
 		}
 	}
+
+	//for i := 0; i < h.list[0].lru.Len(); i++ {
+	//	for c := 0; c < len(allKeys); c++ {
+	//		if len(allKeys[c]) > i {
+	//			keys = append(keys, allKeys[c][i])
+	//		}
+	//	}
+	//}
 
 	return keys
 }
@@ -239,7 +245,7 @@ func (h *HashLruCache) Len() int {
 	return length
 }
 
-func (h *HashLruCache) modulus (key *interface{}) int {
+func (h *HashLruCache) modulus(key *interface{}) int {
 	str := InterfaceToString(*key)
 	return int(md5.Sum([]byte(str))[0]) % h.sliceNum
 }
